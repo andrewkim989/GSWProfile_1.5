@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <title>Edit Your Profile</title>
+
+        <link rel = "stylesheet"
+        href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity = "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin = "anonymous">
+
+        <style>
+            #top {
+                padding: 12px;
+                padding-left: 70px;
+                background-color: rgb(117, 151, 247);
+            }
+            h4 {
+                font-size: 30px;
+                vertical-align: top;
+                display: inline-block;
+            }
+            #topright {
+                float: right;
+                margin-right: 80px;
+            }
+            #topright a {
+                font-size: 20px;
+                color: rgb(231, 248, 200);
+            }
+            #wrapper {
+                background-color: lightgrey;
+                height: 520px;
+            }
+            #warning {
+                padding-left: 50px;
+                padding-top: 20px;
+            }
+            #main {
+                padding: 20px;
+                padding-left: 70px;
+                width: 800px;
+                vertical-align: top;
+                display: inline-block;
+            }
+            #blackline {
+                height: 3px;
+                background-color: black;
+            }
+            #bottomcolor {
+                background-color: rgb(117, 151, 247);
+                height: 60px;
+            }
+            #created {
+                float: right;
+                padding-top: 10px;
+                margin-right: 30px;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "top">
+            <h4>Edit Profile</h4>
+            <div id = "topright">
+                <a class = "btn" href = "javascript:window.history.back();">Back</a>
+                <h4> | </h4>
+                <a class = "btn" href = "/">Home</a>
+                <h4> | </h4>
+                <a class = "btn" href = "/logout">Logout!</a>
+            </div>
+        </div>
+        <div id = "blackline"></div>
+        <div id = "wrapper">
+            <div id = "warning">
+            {% for message in messages%}
+                {% if 'edit' in message.tags %}
+                    <span class = "text-danger">{{message}}</span><br/>
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div id = "main">
+                <form action = '/editprofile_process' method = 'post'>
+                    {% csrf_token %}
+                    <h5>First Name:</h5>
+                    <input type = 'text' name = 'first_name' value = "{{user.first_name}}">
+                    <br>
+                    <br>
+                    <h5>Last Name:</h5>
+                    <input type = 'text' name = 'last_name' value = "{{user.last_name}}">
+                    <br>
+                    <br>
+                    <h5>Email:</h5>
+                    <input type = 'text' name = 'email' value = "{{user.email}}">
+                    <br>
+                    <br>
+                    <input type = 'submit' value = 'Update'>
+                </form>
+                <br>
+            </div>
+        </div>
+        <div id = "blackline"></div>
+        <div id = "bottomcolor">
+            <div id = "created">
+                <p>© 2018 Andrew Kim</p>
+            </div>
+        </div>
+    </body>
+</html>

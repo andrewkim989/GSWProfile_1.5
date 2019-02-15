@@ -1,0 +1,214 @@
+<html>
+    <head>
+        <script>
+            $(document).ready(function(){
+                $("#playerpost").submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        method: "post",
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            $("#comment").html(data);
+                        }
+                    })
+                });
+
+                $(".likecomment").submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        method: "post",
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            $("#comment").html(data);
+                        }
+                    });
+                });
+
+                $(".replyto").click(function () {
+                    $(this).parent().children(".replyform").toggle();
+                });
+
+                $(".playerreply").submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        method: "post",
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            $("#comment").html(data);
+                        }
+                    });
+                });
+
+                $(".likereply").submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        method: "post",
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            $("#comment").html(data);
+                        }
+                    });
+                });
+
+                $(".delete").click(function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: this.href,
+                        method: "get",
+                        success: function(data) {
+                            $("#comment").html(data);
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <style>
+            .commentcount {
+                padding: 10px;
+                padding-left: 50px;
+            }
+            .allcomments {
+                margin-top: 5px;
+            }
+            #postcomment {
+                padding: 15px;
+                padding-left: 25px;
+                padding-bottom: 1px;
+                margin-left: 30px;
+                margin-right: 10px;
+                background-color: rgb(228, 227, 227);
+                border-color: black;
+            }
+            #singlecomment {
+                margin-left: 20px;
+                background-color: white;
+            }
+            .onecomment {
+                margin-left: 5px;
+                white-space: pre-line;
+            }
+            #singlecomment a {
+                color: blue;
+            }
+            #singlecomment h6 {
+                background-color: rgb(184, 184, 230);
+                padding: 5px;
+            }
+            .like {
+                display: inline-block;
+            }
+            #comment a:hover {
+                background-color: rgb(243, 252, 119);
+            }
+            #reply {
+                margin: 10px;
+                margin-left: 20px;
+                padding-bottom: 5px;
+            }
+            #reply h6 {
+                background-color: rgb(220, 223, 82);
+            }
+            .onereply {
+                white-space: pre-line;
+            }
+            .replyto {
+                display: inline-block;
+                color: blue;
+            }
+            .replyform {
+                margin-left: 20px;
+                display: none;
+            }
+            .time {
+                float: right;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "comment">
+            <div class = "commentcount">
+                <h5>Comments: {{all}}</h5>
+            </div>
+
+            {% if request.session.login == "login" %}
+            <div id = "postcomment">
+                <form action = "/comment_player/{{player.id}}" method = "post" id = "playerpost">
+                    {% csrf_token %}
+                    <textarea name = "comment" rows = "3" cols = "90" required
+                    placeholder = "Please be respectful to others in the comments section"></textarea>
+                    <br>
+                    <input type = "submit" class = "btn btn-primary" value = "Submit">
+                </form>
+            </div>
+            {% endif %}
+            
+            <div class = "allcomments">
+            {% for comment in comments reversed %}
+                <div id = "singlecomment">
+                    <h6><a href = "/user/{{comment.commenter.id}}">
+                    {{comment.commenter.first_name}} {{comment.commenter.last_name}}</a>
+                    +{{comment.comment_likes.count}} <span class = "time">{{comment.created_at}}</span></h6>
+                    <p class = "onecomment">{{comment.comment}}</p>
+
+                    {% if request.session.login == "login" %}
+                    <div class = "replybox">
+                        <button type = "button" class = "btn btn-link replyto">Reply</button>
+
+                        {% if request.session.login == "login" and comment.commenter.id is not request.session.id %}
+                        <div class = "like">
+                            <form action = "/player_commentlike/{{player.id}}/{{comment.id}}"
+                            method = "post" class = "likecomment">
+                                {% csrf_token %}
+                                <input type = "submit" class = "btn btn-light" value = "Like">
+                            </form>
+                        </div>
+                        {% endif %}
+
+                        {% if request.session.login == "login" and comment.commenter.id is request.session.id %}
+                            <a class = "delete" href = "/player_commentdelete/{{player.id}}/deletecomment/{{comment.id}}">Delete</a>
+                        {% endif %}
+
+                        <div class = "replyform">
+                            <form action = "/reply_player/{{player.id}}/{{comment.id}}" method = "post"
+                            class = "playerreply">
+                                {% csrf_token %}
+                                <textarea name = "reply" rows = "3" cols = "90"
+                                placeholder = "Post a reply to above comment"></textarea>
+                                <br>
+                                <input type = "submit" class = "btn btn-dark"  value = "Post Reply">
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for reply in comment.replied_comment.all %}
+                        <div id = "reply">
+                            <h6><a href = "/user/{{reply.replier.id}}">
+                            {{reply.replier.first_name}} {{reply.replier.last_name}}</a>
+                            +{{reply.reply_likes.count}} <span class = "time">{{reply.created_at}}</span></h6>
+                            <p class = "onereply">{{reply.reply}}</p>
+                            {% if request.session.login == "login" and reply.replier.id is not request.session.id %}
+                            <form action = "/player_replylike/{{player.id}}/{{reply.id}}"
+                            method = "post" class = "likereply">
+                                {% csrf_token %}
+                                <input type = "submit" class = "btn btn-light" value = "Like">
+                            </form>
+                            {% endif %}
+
+                            {% if request.session.login == "login" and reply.replier.id is request.session.id %}
+                                <a class = "delete" href = "/player_replydelete/{{player.id}}/deletereply/{{reply.id}}">Delete</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

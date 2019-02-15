@@ -1,0 +1,185 @@
+<html>
+    <head>
+        <title>GSW Team Profile Homepage</title>
+
+        <link rel = "stylesheet"
+        href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity = "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin = "anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+
+        <style>
+            #top {
+                background-color: rgb(93, 50, 250);
+                padding: 20px;
+                padding-left: 1020px;
+                font-size: 25px;
+            }
+            #top a {
+                color: white;
+            }
+            h1 {
+                text-align: center;
+            }
+            h4 {
+                display: inline-block;
+                vertical-align: top;
+                color: rgb(141, 168, 21);
+            }
+            #blackline {
+                height: 3px;
+                background-color: black;
+            }
+            #main {
+                padding: 20px 50px;
+                background-color: rgb(233, 233, 233);
+            }
+            h5 {
+                margin-top: 20px;
+            }
+            img {
+                display: block;
+                margin: 0 auto;
+                margin-top: 30px;
+                margin-bottom: 20px;
+                height: 350px;
+            }
+            #all {
+                padding-top: 50px;
+                padding-left: 150px;
+                padding-bottom: 20px;
+                background-color: rgb(233, 233, 233);
+            }
+            h6 {
+                font-size: 30px;
+            }
+            #players {
+                display: inline-block;
+                vertical-align: top;
+                width: 250px;
+            }
+            #coaches {
+                display: inline-block;
+                vertical-align: top;
+                width: 250px;
+                margin-left: 100px;
+            }
+            #others {
+                display: inline-block;
+                vertical-align: top;
+                width: 250px;
+                margin-left: 100px;
+            }
+            #bottom {
+                background-color: rgb(93, 50, 250);
+                padding: 20px;
+                font-size: 20px;
+            }
+            #bottom a {
+                color: white;
+            }
+            #created {
+                color: white;
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "top">
+            {% if request.session.login == 'logout'%}
+                <a href = "/signin"><u>Login/Signup</u></a>
+            {% endif%}
+            {% if request.session.login == 'login'%}
+                <a href = "/profile"><u>User Profile</u></a>
+                <h4>|</h4>
+                <a href = "/logout"><u>Logout!</u></a>
+            {% endif%}
+        </div>
+        <div id = "blackline"></div>
+        <div id = "main">
+            <h1>Golden State Warriors Team Profile</h1>
+            <div id = "gswimages" class = "carousel slide" data-ride = "carousel">
+                <ul class = "carousel-indicators">
+                  <li data-target = "#gswimages" data-slide-to = "0" class = "active"></li>
+                  <li data-target = "#gswimages" data-slide-to = "1"></li>
+                  <li data-target = "#gswimages" data-slide-to = "2"></li>
+                  <li data-target = "#gswimages" data-slide-to = "3"></li>
+                  <li data-target = "#gswimages" data-slide-to = "4"></li>
+                </ul>
+              
+                <div class = "carousel-inner">
+                  <div class = "carousel-item active">
+                    <img src = "https://www.nba.com/warriors/sites/warriors/files/styles/story_main_photo/public/sfrelease_042214_660.jpg" alt = "Bay Bridge">
+                  </div>
+                  <div class = "carousel-item">
+                    <img src = "https://cdn.nba.net/nba-drupal-prod/styles/landscape/s3/2017-09/warriors-quartet.jpg"
+                    alt = "Champs">
+                  </div>
+                  <div class = "carousel-item">
+                    <img src = "https://imagesvc.timeincapp.com/v3/fan/image?url=http://hoopshabit.com/wp-content/uploads/getty-images/2017/11/879205642-new-orleans-pelicans-v-golden-state-warriors.jpg-850x560.jpg"
+                    alt = "The Town">
+                  </div>
+                  <div class = "carousel-item">
+                    <img src = "https://cdn.vox-cdn.com/thumbor/WU2PzEJpKvydDw4yLqOtlbJAsdI=/0x0:3264x2448/1200x800/filters:focal(1371x963:1893x1485)/cdn.vox-cdn.com/uploads/chorus_image/image/59388825/Golden-State-Warriors-win-Oracle-Arena.0.jpg"
+                    alt = "Oracle Arena">
+                  </div>
+                  <div class = "carousel-item">
+                    <img src = "https://media.bizj.us/view/img/10931749/chase-center-night-sky*750xx2222-1252-218-0.jpg"
+                    alt = "Chase Center">
+                  </div>
+                </div>
+              
+                <a class = "carousel-control-prev" href = "#gswimages" data-slide = "prev">
+                  <span class = "carousel-control-prev-icon"></span>
+                </a>
+                <a class = "carousel-control-next" href = "#gswimages" data-slide = "next">
+                  <span class = "carousel-control-next-icon"></span>
+                </a>
+              
+              </div>
+            <h5>Welcome to the Golden State Warriors Team Profile!</h5>
+            <p>Want to know about your favorite Warriors player? Or how about the coaches?
+            The general manager? The owner? Then you've come to the right place! </p>
+            <p>This website shows the list of all of the members of the organization, their
+            roles, and what they have done for the organization overall. Click on the list of
+            the players and other members of the team below, and find out more about them.
+            Enjoy! </p>
+            <h3>GO WARRIORS! </h3>
+        </div>
+        <div id = "all">
+            <div id = "players">
+                <h6><u>Players</u></h6>
+                {% for player in players %}
+                    <p><a href = "/player/{{player.id}}">{{player.name}}</a></p>
+                {% endfor %}
+            </div>
+            <div id = "coaches">
+                <h6><u>Coaches</u></h6>
+                {% for coach in coaches %}
+                    <p><a href = "/coach/{{coach.id}}">{{coach.name}}</a></p>
+                {% endfor %}
+            </div>
+            <div id = "others">
+                <h6><u>Others</u></h6>
+                {% for other in others %}
+                    <p><a href = "/other/{{other.id}}">{{other.name}}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+        <div id = "blackline"></div>
+        <div id = "bottom">
+            <a href = "/">Back to top</a>
+            <div id = "created">
+                <p>© 2018 Andrew Kim</p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <script>
+            $(document).ready( function() {
+                $("a").click(function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: this.href,
+                        method: "get",
+                        success: function(data) {
+                            $("#act").html(data)
+                        }
+                    });
+                });
+            });
+        </script>
+        <style>
+            #act {
+                padding: 0px;
+                height: 370px;
+            }
+        </style>
+            
+    </head>
+    <body>
+        <div id = "act">
+            <h5>User Activities: ({{activities.paginator.count}})</h5>
+            <div id = "activities">
+                {% for activity in activities %}
+                    <p>{{activity.activity}}</p>
+                {% endfor %}
+            </div>
+
+            <ul class = "pagination">
+            {% for i in activities.paginator.page_range %}
+                {% if activities.number == i %}
+                    <li class = "page-item active"><span class = "page-link">{{i}}</span></li>
+                {% else %}
+                    <li class = "page-item"><a class = "page-link" 
+                        href = "/useractivities/{{num}}/page/{{ i }}">{{i}}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    </body>
+</html>

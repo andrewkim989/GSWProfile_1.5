@@ -1,0 +1,181 @@
+<html>
+    <head>
+        <title>{{other.name}}</title>
+
+        <link rel = "stylesheet"
+        href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity = "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin = "anonymous">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $.ajax({
+                    url: "/othercomments/" + {{num}},
+                    success: function(serverResponse) {
+                        $("#comments").html(serverResponse)
+                    }
+                });
+            });
+        </script>
+
+        <style>
+            #top {
+                background-color: rgb(93, 50, 250);
+                padding-left: 70px;
+                font-size: 25px;
+            }
+            #topright {
+                display: inline-block;
+            }
+            #top a {
+                color: white;
+                display: inline-block;
+            }
+            #top img {
+                width: 100px;
+            }
+            h1 {
+                text-align: center;
+            }
+            h4 {
+                display: inline-block;
+                vertical-align: top;
+                color: rgb(141, 168, 21);
+            }
+            #blackline {
+                height: 3px;
+                background-color: black;
+            }
+            #main {
+                margin-left: 50px;
+                margin-top: 10px;
+            }
+            #main img {
+                padding: 10px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #comments {
+                padding-bottom: 40px;
+                padding-right: 200px;
+                padding-left: 250px;
+                background-color: rgb(237, 241, 245);
+            }
+            #reply {
+                margin-left: 20px;
+                margin: 10px;
+                padding: 5px;
+                padding-left: 15px;
+                background-color: rgb(220, 223, 82);
+                border-radius: 10px;
+            }
+            #bottom {
+                background-color: rgb(93, 50, 250);
+                padding: 15px;
+                padding-left: 30px;
+                font-size: 21px;
+                color: white;
+            }
+            #bottom a {
+                color: white;
+            }
+            #maindescription {
+                display: inline-block;
+                width: 700px;
+                margin-top: 15px;
+                white-space: pre-line;
+            }
+            table {
+                border: 1px solid black;
+                border-collapse: collapse;
+                margin: 25px;
+                margin-left: 20px;
+                margin-right: 0px;
+                margin-bottom: 30px;
+                display: inline-block;
+                vertical-align: top;
+            }
+            th {
+                text-align: left;
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                padding-right: 30px;
+                background-color: rgb(7, 10, 185);
+                color: white;
+            }
+            tr td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 10px;
+                width: 300px;
+                background-color: rgb(220, 232, 255);
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "top">
+            <a href = "/" title = "Home"><img src = "https://d1si3tbndbzwz9.cloudfront.net/basketball/team/16/logo.png"></a>
+            {% if request.session.login == 'logout'%}
+            <div id = "topright" style = "margin-left: 650px;">
+                <a href = "javascript:window.history.back();">Back</a>
+                <h4>|</h4>
+                <a href = "/signin">Sign in here to edit this page!</a>
+            </div>
+            {% endif %}
+            {% if request.session.login == 'login'%}
+            <div id = "topright" style = "margin-left: 550px;">
+                <a href = "/editother/{{other.id}}">Edit Member Profile</a>
+                <h4>|</h4>
+                <a href = "/profile">User Homepage</a>
+                <h4>|</h4>
+                <a href = "/logout">Logout!</a>
+            </div>
+            {% endif %}
+        </div>
+        <div id = "blackline"></div>
+        <div id = "main">
+            <h1>{{other.name}}</h1>
+            <img src = "{{other.image}}">
+            <div id = "maindescription">
+                <p>{{other.description}}</p>
+            </div>
+            <table>
+                <tr>
+                    <th>Birth Date</th>
+                    <td>{{other.birth_month}}/{{other.birth_day}}/{{other.birth_year}}</td>
+                </tr>
+                <tr>
+                    <th>Height</th>
+                    <td>{{other.height_foot}}ft. {{other.height_inches}}in.</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td>{{other.weight}} lbs.</td>
+                </tr>
+                <tr>
+                    <th>Position</th>
+                    <td>{{other.position}}</td>
+                </tr>
+                <tr>
+                    <th>Other Information</th>
+                    <td>{{other.info}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id = "comments"></div>
+
+        <div id = "blackline"></div>
+        <div id = "bottom">
+            <p>Created by: <a href = "/user/{{other.other_creator.id}}">
+            {{other.other_creator.first_name}} {{other.other_creator.last_name}}</a>
+            at {{other.created_at}}
+            </p>
+            <a href = "/other/{{other.id}}"><u>Back to top</u></a>
+        </div>
+    </body>
+</html>

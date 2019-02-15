@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <title>{{u.first_name}} {{u.last_name}}'s homepage</title>
+
+        <link rel = "stylesheet"
+        href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity = "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin = "anonymous">
+
+        <style>
+            #top {
+                padding: 12px;
+                padding-left: 50px;
+                background-color: rgb(117, 151, 247);
+            }
+            h4 {
+                font-size: 30px;
+                vertical-align: top;
+                display: inline-block;
+            }
+            #topright {
+                vertical-align: top;
+                float: right;
+            }
+            #topright a {
+                font-size: 20px;
+                color: rgb(231, 248, 200);
+            }
+            #wrapper {
+                background-color: lightgrey;
+                height: 520px;
+            }
+            #main {
+                margin-top: 10px;
+                margin-left: 5px;
+                padding: 10px;
+                padding-left: 30px;
+                width: 830px;
+                vertical-align: top;
+                display: inline-block;
+                border-style: groove;
+                border-color: blue;
+                border-radius: 10px;
+                border-width: 1px;
+            }
+            #add{
+                vertical-align: top;
+                display: inline-block;
+                text-align: center;
+                width: 400px;
+                margin-top: 10px;
+                padding: 10px;
+                border-style: groove;
+                border-color: blue;
+                border-radius: 10px;
+                border-width: 1px;
+            }
+            #add a {
+                font-size: 20px;
+            }
+            #side {
+                vertical-align: top;
+                display: inline-block;
+                margin-left: 10px;
+            }
+            #otherusers{
+                text-align: center;
+                width: 400px;
+                padding: 10px;
+                height: 250px;
+                overflow: auto;
+                margin-top: 10px;
+                border-style: groove;
+                border-color: blue;
+                border-radius: 10px;
+                border-width: 1px;
+            }
+            #otherusers a {
+                font-size: 20px;
+            }
+            #blackline {
+                height: 3px;
+                background-color: black;
+            }
+            #bottomcolor {
+                background-color: rgb(117, 151, 247);
+                height: 60px;
+            }
+            #created {
+                color: white;
+                float: right;
+                padding-top: 10px;
+                margin-right: 30px;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "top">
+            <h4>Welcome, {{u.first_name}} {{u.last_name}}!</h4>
+            <div id = "topright">
+                <a class = "btn" href = "/editprofile">Edit your profile</a>
+                <h4> | </h4>
+                <a class = "btn" href = "/">Home</a>
+                <h4> | </h4>
+                <a class = "btn" href = "/logout">Logout!</a>
+            </div>
+        </div>
+        <div id = "blackline"></div>
+        <div id = "wrapper">
+            <div id = "main">
+                <h3><u>Recent Website Activities</u></h3>
+                <br>
+                {% for activity in activities %}
+                    {{activity.act.first_name}} {{activity.act.last_name}} - 
+                    {{activity.activity}}</p>
+                {% endfor %}
+            </div>
+            <div id = "side">
+                <div id = "add">
+                    <h3><u>Add new members of the organization</u></h3>
+                    <a href = "addplayer">Add player</a>
+                    <br>
+                    <a href = "addcoach">Add coach</a>
+                    <br>
+                    <a href = "addother">Add others</a>
+                    </div>
+                <div id = "otherusers">
+                    <h3><u>View other user's profiles</u></h3>
+                    {% for user in users %}
+                        {% if user.id is not request.session.id %}
+                            <a href = "user/{{user.id}}">{{user.first_name}} {{user.last_name}}</a>
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div id = "blackline"></div>
+        <div id = "bottomcolor">
+            <div id = "created">
+                <p>© 2018 Andrew Kim</p>
+            </div>
+        </div>
+    </body>
+</html>
