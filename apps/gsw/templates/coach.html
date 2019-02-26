@@ -12,7 +12,7 @@
         <script>
             $(document).ready(function(){
                 $.ajax({
-                    url: "/coachcomments/" + {{num}},
+                    url: "/coachcomments/{{num}}",
                     success: function(serverResponse) {
                         $("#comments").html(serverResponse)
                     }
