@@ -12,7 +12,7 @@
         <script>
             $(document).ready(function(){
                 $.ajax({
-                    url: "/othercomments/" + {{num}},
+                    url: "/othercomments/{{num}}",
                     success: function(serverResponse) {
                         $("#comments").html(serverResponse)
                     }
