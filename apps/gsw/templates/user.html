@@ -13,7 +13,7 @@
         <script>
             $(document).ready(function(){
                 $.ajax({
-                    url: "/useractivities/" + {{num}} + "/page/1",
+                    url: "/useractivities/{{num}}/page/1",
                     success: function(data) {
                         $("#act").html(data)
                     }
